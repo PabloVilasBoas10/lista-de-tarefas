@@ -13,7 +13,7 @@ btnTarefa.addEventListener('click', () => {
 function criaTarefa(txt) {
   const divContainer = criaContainer(txt)
   ul.appendChild(divContainer)
-  LimpaInput()
+  limpaInput()
 
 }
 
@@ -72,6 +72,9 @@ function criaBtnEditar() {
   return btnEditar
 }
 
+
+// Arrumar o bug de mudar a tarefa
+// Obs: Provavelmente o input do container está lembrando da antiga tarefa alterada e está mudando duas ou mais tarefas ao mesmo tempo
 function ContainerEditarTarefa(e) {
   const el = e.target
   if (el.classList.contains('editar-tarefa')) {
@@ -102,7 +105,7 @@ document.addEventListener('keypress', (e) => {
   }
   if (e.keyCode === 13) {
     criaTarefa(inputTarefa.value)
-    LimpaInput()
+    limpaInput()
 
   }
 })
@@ -122,16 +125,24 @@ document.addEventListener('click', (e) => {
 
     inputEditarTarefa.focus()
     const li = el.parentElement.parentElement.children[0].children[0]
-
     btnEditarTarefa.addEventListener('click', () => {
-      if (!inputEditarTarefa.value || inputEditarTarefa.value.trim() === '') {
-        return
-      }
+
       li.innerText = inputEditarTarefa.value
       containerEditarTarefa.classList.remove('abrir')
-      inputEditarTarefa.value = ''
+
 
     })
+
+    // btnEditarTarefa.addEventListener('click', () => {
+    //   if (!inputEditarTarefa.value || inputEditarTarefa.value.trim() === '') {
+    //     return
+    //   }
+    //   li.innerText = inputEditarTarefa.value
+    //   containerEditarTarefa.classList.remove('abrir')
+    //   inputEditarTarefa.value = ''
+    //   console.log(li)
+
+    // })
     btnFecharJanela.addEventListener('click', () => {
       containerEditarTarefa.classList.remove('abrir')
       inputEditarTarefa.value = ''
@@ -148,7 +159,7 @@ document.addEventListener('click', (e) => {
   }
 })
 
-function LimpaInput() {
+function limpaInput() {
   inputTarefa.value = ''
   inputTarefa.focus()
 }
