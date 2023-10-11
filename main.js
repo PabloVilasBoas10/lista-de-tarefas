@@ -1,12 +1,15 @@
 const inputTarefa = document.querySelector('.input-tarefa')
 const btnTarefa = document.querySelector('.btn-criar')
 const ul = document.querySelector('.lista')
+let listTarefas = []
+
 
 btnTarefa.addEventListener('click', () => {
   if (!inputTarefa.value || inputTarefa.value.trim() === '') {
     return
   }
   criaTarefa(inputTarefa.value)
+  listTarefas.push(inputTarefa.value)
 })
 
 
@@ -72,30 +75,16 @@ function criaBtnEditar() {
   return btnEditar
 }
 
+function criaContainerEdit() {
+  const divContainer = `<h2>Editar Tarefa</h2>
+  <input type="text" class="input-tarefa-editada" maxlength="20" placeholder="Digite sua nova tarefa..."/>
+  <button class="btn-confirmar-edit">Confirmar</button>
+  <button class="fechar-janela">&#10006</button>`
 
-// Arrumar o bug de mudar a tarefa
-// Obs: Provavelmente o input do container está lembrando da antiga tarefa alterada e está mudando duas ou mais tarefas ao mesmo tempo
-function ContainerEditarTarefa(e) {
-  const el = e.target
-  if (el.classList.contains('editar-tarefa')) {
-    const containerEditarTarefa = document.querySelector('.div-editar-tarefa')
-    const inputEditarTarefa = containerEditarTarefa.querySelector('.input-tarefa-editada')
-    const btnEditarTarefa = containerEditarTarefa.querySelector('.btn-confirmar-edit')
-    containerEditarTarefa.classList.add('abrir')
-
-    inputEditarTarefa.focus()
-    const li = el.parentElement.parentElement.children[0].children[0]
-
-    btnEditarTarefa.addEventListener('click', () => {
-      if (!inputEditarTarefa.value || inputEditarTarefa.value.trim() === '') {
-        return
-      }
-      li.innerText = inputEditarTarefa.value
-      containerEditarTarefa.classList.remove('abrir')
-
-    })
-  }
+  return divContainer
 }
+
+
 
 // Eventos
 
@@ -108,16 +97,28 @@ document.addEventListener('keypress', (e) => {
     limpaInput()
 
   }
+
 })
 
 document.addEventListener('click', (e) => {
   const el = e.target
+
+  // Evento de excluir tarefa
   if (el.classList.contains('apagar-tarefa')) {
     el.parentElement.parentElement.remove()
   }
 
+  // Evento de checar tarefa
+  if (el.classList.contains('checar-tarefa')) {
+    el.parentElement.parentElement.classList.toggle('tarefa-concluida')
+  }
+
+
+  // Evento de editar tarefa
   if (el.classList.contains('editar-tarefa')) {
+    const divContainerEdit = criaContainerEdit()
     const containerEditarTarefa = document.querySelector('.div-editar-tarefa')
+    containerEditarTarefa.innerHTML = divContainerEdit
     const inputEditarTarefa = containerEditarTarefa.querySelector('.input-tarefa-editada')
     const btnEditarTarefa = containerEditarTarefa.querySelector('.btn-confirmar-edit')
     const btnFecharJanela = containerEditarTarefa.querySelector('.fechar-janela')
@@ -125,39 +126,26 @@ document.addEventListener('click', (e) => {
 
     inputEditarTarefa.focus()
     const li = el.parentElement.parentElement.children[0].children[0]
-    btnEditarTarefa.addEventListener('click', () => {
 
+    btnEditarTarefa.addEventListener('click', () => {
+      if (!inputEditarTarefa.value || inputEditarTarefa.value.trim() === '') {
+        return
+      }
       li.innerText = inputEditarTarefa.value
       containerEditarTarefa.classList.remove('abrir')
-
+      inputEditarTarefa.value = ''
+      console.log(li)
 
     })
-
-    // btnEditarTarefa.addEventListener('click', () => {
-    //   if (!inputEditarTarefa.value || inputEditarTarefa.value.trim() === '') {
-    //     return
-    //   }
-    //   li.innerText = inputEditarTarefa.value
-    //   containerEditarTarefa.classList.remove('abrir')
-    //   inputEditarTarefa.value = ''
-    //   console.log(li)
-
-    // })
     btnFecharJanela.addEventListener('click', () => {
       containerEditarTarefa.classList.remove('abrir')
       inputEditarTarefa.value = ''
 
     })
+
   }
 })
 
-
-document.addEventListener('click', (e) => {
-  const el = e.target
-  if (el.classList.contains('checar-tarefa')) {
-    el.parentElement.parentElement.classList.toggle('tarefa-concluida')
-  }
-})
 
 function limpaInput() {
   inputTarefa.value = ''
