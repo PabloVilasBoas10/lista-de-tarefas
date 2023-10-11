@@ -53,7 +53,7 @@ function criaContainer(txt) {
 
 function criaBtnApagar() {
   const btnApagar = document.createElement('button')
-  btnApagar.innerText = 'X'
+  btnApagar.innerHTML = '&#10006'
   btnApagar.classList.add('apagar-tarefa')
   return btnApagar
 }
@@ -67,7 +67,7 @@ function criaInputChecar() {
 
 function criaBtnEditar() {
   const btnEditar = document.createElement('button')
-  btnEditar.innerText = 'E'
+  btnEditar.innerHTML = '&#9999'
   btnEditar.classList.add('editar-tarefa')
   return btnEditar
 }

@@ -3,13 +3,21 @@
   font-weight: bold;
 }
 
+body {
+  background-color: #f5d878;
+}
+
+li {
+  font-size: 1.2rem;
+}
+
 .input-tarefa {
-  width: 80%;
+  width: 75%;
   height: 30px;
   border-radius: 4px;
   font-size: 1.3rem;
   padding: 10px;
-  margin: 20px;
+  margin: 20px 20px 20px 40px;
   border: 2px solid #000000;
 }
 
@@ -54,6 +62,9 @@
   width: 30px;
   height: 30px;
   margin-right: 10px;
+  border: 1px solid #000000;
+  cursor: pointer;
+  border-radius: 2px;
 }
 
 .tarefa-concluida li {
@@ -64,6 +75,7 @@
 }
 
 .div-editar-tarefa {
+  background-image: linear-gradient(180deg, #fff, #f0c024);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -71,7 +83,7 @@
   top: 0px;
   left: 0px;
   text-align: center;
-  backdrop-filter: blur(20px);
+  /* backdrop-filter: blur(20px); */
   border: 4px solid #f0c024;
   border-radius: 4px;
   display: none;
@@ -98,7 +110,7 @@
   margin: 20px auto;
   height: 40px;
   border-radius: 4px;
-  border: 2px solid #f0c024;
+  border: 4px solid #f0c024;
   cursor: pointer;
   background: #fff;
   transition: 0.03s;
@@ -112,8 +124,8 @@
   position: absolute;
   top: 10px;
   right: 15px;
-  padding: 10px;
-  border-radius: 100%;
+  padding: 10px 20px;
+  border-radius: 5px;
   border: 2px solid #f0c024;
   cursor: pointer;
   background: rgb(230, 113, 113);
