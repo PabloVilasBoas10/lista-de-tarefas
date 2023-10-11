@@ -1,15 +1,13 @@
 const inputTarefa = document.querySelector('.input-tarefa')
 const btnTarefa = document.querySelector('.btn-criar')
 const ul = document.querySelector('.lista')
-let listTarefas = []
-
 
 btnTarefa.addEventListener('click', () => {
   if (!inputTarefa.value || inputTarefa.value.trim() === '') {
     return
   }
   criaTarefa(inputTarefa.value)
-  listTarefas.push(inputTarefa.value)
+
 })
 
 
