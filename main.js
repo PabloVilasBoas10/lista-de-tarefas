@@ -1,12 +1,19 @@
 const inputTarefa = document.querySelector('.input-tarefa')
 const btnTarefa = document.querySelector('.btn-criar')
 const ul = document.querySelector('.lista')
+const listaTarefas = []
 
 btnTarefa.addEventListener('click', () => {
   if (!inputTarefa.value || inputTarefa.value.trim() === '') {
     return
   }
-  criaTarefa(inputTarefa.value)
+
+  if (listaTarefas.includes(inputTarefa.value)) {
+    alert('ESSA TAREFA JÁ EXISTE!')
+    return
+  }
+  listaTarefas.push(inputTarefa.value)
+  criaTarefa(listaTarefas[listaTarefas.length - 1])
 
 })
 
@@ -74,8 +81,9 @@ function criaBtnEditar() {
 }
 
 function criaContainerEdit() {
-  const divContainer = `<h2>Editar Tarefa</h2>
-  <input type="text" class="input-tarefa-editada" maxlength="20" placeholder="Digite sua nova tarefa..."/>
+  const divContainer = `
+  <h2>Editar Tarefa</h2>
+  <input type="text" class="input-tarefa-editada" maxlength="25" placeholder="Digite sua nova tarefa..."/>
   <button class="btn-confirmar-edit">Confirmar</button>
   <button class="fechar-janela">&#10006</button>`
 
@@ -90,10 +98,19 @@ document.addEventListener('keypress', (e) => {
   if (!inputTarefa.value || inputTarefa.value.trim() === '') {
     return
   }
-  if (e.keyCode === 13) {
-    criaTarefa(inputTarefa.value)
-    limpaInput()
 
+  if (e.keyCode === 13) {
+
+    if (listaTarefas.includes(inputTarefa.value)) {
+      alert('Essa Tarefa ja existe!')
+      return
+    }
+
+    listaTarefas.push(inputTarefa.value)
+    criaTarefa(listaTarefas[listaTarefas.length - 1])
+    console.log(listaTarefas)
+
+    limpaInput()
   }
 
 })
@@ -103,7 +120,11 @@ document.addEventListener('click', (e) => {
 
   // Evento de excluir tarefa
   if (el.classList.contains('apagar-tarefa')) {
-    el.parentElement.parentElement.remove()
+    const promptApagar = confirm("Tem certeza que deseja apagar essa tarefa?")
+    if (promptApagar) {
+      el.parentElement.parentElement.remove()
+    }
+
   }
 
   // Evento de checar tarefa
@@ -124,6 +145,7 @@ document.addEventListener('click', (e) => {
 
     inputEditarTarefa.focus()
     const li = el.parentElement.parentElement.children[0].children[0]
+    inputEditarTarefa.value = li.innerText // abre o input com o texto da tarefa
 
     btnEditarTarefa.addEventListener('click', () => {
       if (!inputEditarTarefa.value || inputEditarTarefa.value.trim() === '') {
@@ -132,7 +154,6 @@ document.addEventListener('click', (e) => {
       li.innerText = inputEditarTarefa.value
       containerEditarTarefa.classList.remove('abrir')
       inputEditarTarefa.value = ''
-      console.log(li)
 
     })
     btnFecharJanela.addEventListener('click', () => {
@@ -143,7 +164,6 @@ document.addEventListener('click', (e) => {
 
   }
 })
-
 
 function limpaInput() {
   inputTarefa.value = ''
